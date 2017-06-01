@@ -6,7 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.example.administrator.contacts.domain.PhoneBook;
 
@@ -15,14 +16,23 @@ import java.util.List;
 
 public class ContactActivity extends AppCompatActivity {
 
+    RecyclerView recyclerView;
+    ContactAdapter adapter;
+    List<PhoneBook> datas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
 
-        for( PhoneBook item : getContacts()) {
-            Log.i("Contacts", "이름="+item.getName() +", tel="+item.getId());
-        }
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        datas = getContacts();
+
+        adapter = new ContactAdapter(datas);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
     }
 
@@ -45,15 +55,17 @@ public class ContactActivity extends AppCompatActivity {
         // 1. 데이터 컨텐츠 URI (자원의 주소) 를 정의
         // 전화번호 URI 가 따로 정의되어 있어서 그 주소값을 가져와야 하는군.
         // 이게 테이블명에 해당하는군
-        Uri phoneUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        Uri phoneUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI; //TODO 추가 공부
         // resolver 를 공부하다 보면 이렇게 미리 정의된 클래스, 이런 사용 방법을 공부할 수 있다.
 
         //여러 데이터가 있을 것인데, 어떤 데이터를 가져올 것인지 정의를 해 줘야 한다. 이 행위를 projection 이라 하는군
         //ContactsContract.CommonDataKinds.Phone 이 경로에 상수로 칼럼이 정의되어 있다!
         //원하는 칼럼들을 가져오는 것이야
-        String[] projection = { ContactsContract.CommonDataKinds.Phone.CONTACT_ID
+        String[] projection = { ContactsContract.CommonDataKinds.Phone.CONTACT_ID // 인덱스 값, 중복될 수 있음 -- 한 사람 번호가 여러개인 경우
                 ,  ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
                 ,  ContactsContract.CommonDataKinds.Phone.NUMBER};
+
+
 
         // 3. ContentResolver 로 쿼리를 날려서 데이터를 가져온다.
         // resolver 가 provider 에게 쿼리하겠다고 요청한다고 생각하면 된다.
@@ -80,8 +92,6 @@ public class ContactActivity extends AppCompatActivity {
                 phoneBook.setTel(number);
 
                 datas.add(phoneBook);
-
-
             }
         }
         return datas;

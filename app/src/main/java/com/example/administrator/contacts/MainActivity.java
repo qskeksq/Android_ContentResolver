@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnContact).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), ContactActivity.class);
+                Intent intent = new Intent(getBaseContext(), CheckPermissionActivity.class);
                 startActivity(intent);
             }
         });
