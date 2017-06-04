@@ -94,6 +94,8 @@ public class ContactActivity extends AppCompatActivity {
                 datas.add(phoneBook);
             }
         }
+
+        cursor.close(); // 데이터 계열은 반드시 닫아줘야 한다.
         return datas;
     }
 }
