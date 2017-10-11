@@ -70,7 +70,4 @@ public class CheckPermissionActivity extends AppCompatActivity {
         finish();
     }
 
-
-
-
 }
