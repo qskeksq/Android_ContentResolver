@@ -4,7 +4,7 @@
 - 컨텐트 프로바이더가 안드로이드 각종 설정값과 DB에 접근하도록 해 줌
 - 그 결과값을 반환하는 역할을 하는 것이 ContentResolver이다.
 
-![]()
+![](https://github.com/qskeksq/AD_Contacts/blob/master/pic/image001.png)
 
 #### 테이블 & 칼럼 이름
 - 이미지
